@@ -4,7 +4,7 @@ Function Update-CommandLine {
         $strCommand = "Type or paste a valid URL first on the URL box..."
     } Else {
         $global:CommandLineValid = $true        
-        $strCommand = ('youtube-dl.exe -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 ') + ('"') + ($wpf.txtURL.text) + ('"') + (' -o "%(artist)s - %(title)s.%(ext)s"')
+        $strCommand = ('youtube-dl.exe -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 ') + ('"') + ($wpf.txtURL.text) + ('"') + (' -o "\%userprofile%\downloads\%(artist)s - %(title)s.%(ext)s"')
     }
     $wpf.txtCmd.Text = $strCommand
 
