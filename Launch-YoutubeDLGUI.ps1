@@ -4,7 +4,7 @@ Function Update-CommandLine {
         $strCommand = "Type or paste a valid URL first on the URL box..."
     } Else {
         $global:CommandLineValid = $true
-        $DownloadDirectory = "$($env:userprofile)\Downloads\"
+        $DownloadDirectory = $wpf.txtDownloadFolder.Text
         $strCommand = ('youtube-dl.exe -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 ') + ('"') + ($wpf.txtURL.text) + ('"') + (' -o ') + ('"') + $DownloadDirectory + ('%(artist)s - %(title)s.%(ext)s')+('"')
     }
     $wpf.txtCmd.Text = $strCommand
@@ -62,7 +62,7 @@ $inputXML = @"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Launch_Y_CMD"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Youtube-DL PowerShell Front-End" Height="450" Width="800">
     <Grid>
         <TextBox x:Name="txtURL" HorizontalAlignment="Left" Height="64" Margin="10,94,0,0" TextWrapping="Wrap" Text="&lt;paste your URL here&gt;" VerticalAlignment="Top" Width="744"/>
         <Label Content="URL:" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top"/>
@@ -75,10 +75,11 @@ $inputXML = @"
         <Ellipse x:Name="graphReady" Fill="Green" HorizontalAlignment="Left" Height="100" Margin="87,265,0,0" Stroke="Black" VerticalAlignment="Top" Width="100" Visibility="Hidden"/>
         <Ellipse x:Name="graphGrey" Fill="Gray" HorizontalAlignment="Left" Height="100" Margin="87,265,0,0" Stroke="Black" VerticalAlignment="Top" Width="100"/>
         <Rectangle x:Name="graphBusy" Fill="Red" HorizontalAlignment="Left" Height="100" Margin="87,265,0,0" Stroke="Black" VerticalAlignment="Top" Width="100" Visibility="Hidden"/>
+        <TextBox x:Name="txtDownloadFolder" HorizontalAlignment="Left" Height="23" Margin="441,41,0,0" TextWrapping="Wrap" Text="C:\temp" VerticalAlignment="Top" Width="259" IsReadOnly="True"/>
+        <Label Content="Current download location:" HorizontalAlignment="Left" Margin="441,10,0,0" VerticalAlignment="Top" Width="231"/>
 
     </Grid>
 </Window>
-
 "@
 
 $inputXMLClean = $inputXML -replace 'mc:Ignorable="d"','' -replace "x:N",'N' -replace 'x:Class=".*?"','' -replace 'd:DesignHeight="\d*?"','' -replace 'd:DesignWidth="\d*?"',''
@@ -97,6 +98,8 @@ $FormName = $NamedNodes[0].Name
 #Things to load when the WPF form is loaded aka in memory
 $wpf.$FormName.Add_Loaded({
     #Update-Cmd
+    $DownloadDirectory = "$($env:userprofile)\Downloads\"
+    $wpf.txtDownloadFolder.Text = $DownloadDirectory
 })
 #Things to load when the WPF form is rendered aka drawn on screen
 $wpf.$FormName.Add_ContentRendered({
