@@ -5,7 +5,11 @@ Function Update-CommandLine {
     } Else {
         $global:CommandLineValid = $true
         $DownloadDirectory = $wpf.txtDownloadFolder.Text
-        $strCommand = ('youtube-dl.exe -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 ') + ('"') + ($wpf.txtURL.text) + ('"') + (' -o ') + ('"') + $DownloadDirectory + ('%(artist)s - %(title)s.%(ext)s')+('"')
+        If ($wpf.chkDownloadVideo.IsChecked){
+            $strCommand = ('youtube-dl.exe -f best ') + ('"') + ($wpf.txtURL.text) + ('"') + (' -o ') + ('"') + $DownloadDirectory + ('%(artist)s - %(title)s.%(ext)s')+('"')
+        } Else {
+            $strCommand = ('youtube-dl.exe -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 ') + ('"') + ($wpf.txtURL.text) + ('"') + (' -o ') + ('"') + $DownloadDirectory + ('%(artist)s - %(title)s.%(ext)s')+('"')
+        }
     }
     $wpf.txtCmd.Text = $strCommand
 
@@ -77,6 +81,7 @@ $inputXML = @"
         <Rectangle x:Name="graphBusy" Fill="Red" HorizontalAlignment="Left" Height="100" Margin="87,265,0,0" Stroke="Black" VerticalAlignment="Top" Width="100" Visibility="Hidden"/>
         <TextBox x:Name="txtDownloadFolder" HorizontalAlignment="Left" Height="23" Margin="441,41,0,0" TextWrapping="Wrap" Text="C:\temp" VerticalAlignment="Top" Width="259" IsReadOnly="True"/>
         <Label Content="Current download location:" HorizontalAlignment="Left" Margin="441,10,0,0" VerticalAlignment="Top" Width="231"/>
+        <CheckBox x:Name="chkDownloadVideo" Content="Download video instead of converting to MP3" HorizontalAlignment="Left" Margin="441,69,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
@@ -148,6 +153,9 @@ $wpf.btnCheckExec.add_Click({
 #endregion text box events
 #End of text box events
 
+$wpf.chkDownloadVideo.add_Click({
+    Update-CommandLine
+})
 
 #HINT: to update progress bar and/or label during WPF Form treatment, add the following:
 # ... to re-draw the form and then show updated controls in realtime ...
