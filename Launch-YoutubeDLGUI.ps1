@@ -116,6 +116,7 @@ $wpf.$FormName.add_Closing({
 #region text box events
 $wpf.btnRun.add_click({
     Check-Exec #check if Youtube exe has not been modified last minute
+    If (-not ($global:ExecExist)) {break}
     Update-CommandLine #normally not necessary here because each time you change the txtURL, the cmdline is updated anyways through the txtURL.add_Changed event handler ... but well just in case !
     #[string]$CommandWithFullPath = ("cmd.exe /C ") + ('"') + ($wpf.txtExecLocation.text) + ('\') + ($wpf.txtCmd.Text) + ('"')
     [string]$CommandWithFullPath = ($wpf.txtExecLocation.text) + ('\') + ($wpf.txtCmd.Text)
