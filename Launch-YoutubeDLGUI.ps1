@@ -4,7 +4,7 @@ Function Update-CommandLine {
         $strCommand = "Type or paste a valid URL first on the URL box..."
     } Else {
         $global:CommandLineValid = $true        
-        $strCommand = ('youtube-dl.exe -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 ') + ('"') + ($wpf.txtURL.text) + ('"') + (' -o "\%userprofile%\downloads\%(artist)s - %(title)s.%(ext)s"')
+        $strCommand = ('youtube-dl.exe -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 ') + ('"') + ($wpf.txtURL.text) + ('"') + (' -o "\%%userprofile%%\downloads\%(artist)s - %(title)s.%(ext)s"')
     }
     $wpf.txtCmd.Text = $strCommand
 
@@ -116,21 +116,22 @@ $wpf.$FormName.add_Closing({
 #region text box events
 $wpf.btnRun.add_click({
     Check-Exec #check if Youtube exe has not been modified last minute
-    If (-not ($global:ExecExist)) {continue}
-    Update-CommandLine #normally not necessary here because each time you change the txtURL, the cmdline is updated anyways through the txtURL.add_Changed event handler ... but well just in case !
-    #[string]$CommandWithFullPath = ("cmd.exe /C ") + ('"') + ($wpf.txtExecLocation.text) + ('\') + ($wpf.txtCmd.Text) + ('"')
-    [string]$CommandWithFullPath = ($wpf.txtExecLocation.text) + ('\') + ($wpf.txtCmd.Text)
-    $wpf.graphBusy.Visibility = "Visible"
-    $wpf.graphReady.Visibility = "Hidden"
-    $wpf.graphGrey.Visibility = "Hidden"
-    $wpf.$FormName.IsEnabled = $false
-    $wpf.$FormName.Dispatcher.Invoke("Render",[action][scriptblock]{})
-    Invoke-Expression $CommandWithFullPath | out-host
-    $wpf.$FormName.IsEnabled = $true
-    $wpf.graphBusy.Visibility = "Hidden"
-    $wpf.graphReady.Visibility = "Visible"
-    $wpf.graphGrey.Visibility = "Hidden"
-    $wpf.$FormName.Dispatcher.Invoke("Render",[action][scriptblock]{})
+    If ($global:ExecExist) {
+        Update-CommandLine #normally not necessary here because each time you change the txtURL, the cmdline is updated anyways through the txtURL.add_Changed event handler ... but well just in case !
+        #[string]$CommandWithFullPath = ("cmd.exe /C ") + ('"') + ($wpf.txtExecLocation.text) + ('\') + ($wpf.txtCmd.Text) + ('"')
+        [string]$CommandWithFullPath = ($wpf.txtExecLocation.text) + ('\') + ($wpf.txtCmd.Text)
+        $wpf.graphBusy.Visibility = "Visible"
+        $wpf.graphReady.Visibility = "Hidden"
+        $wpf.graphGrey.Visibility = "Hidden"
+        $wpf.$FormName.IsEnabled = $false
+        $wpf.$FormName.Dispatcher.Invoke("Render",[action][scriptblock]{})
+        Invoke-Expression $CommandWithFullPath | out-host
+        $wpf.$FormName.IsEnabled = $true
+        $wpf.graphBusy.Visibility = "Hidden"
+        $wpf.graphReady.Visibility = "Visible"
+        $wpf.graphGrey.Visibility = "Hidden"
+        $wpf.$FormName.Dispatcher.Invoke("Render",[action][scriptblock]{})
+    }
 })
 
 $wpf.txtURL.add_TextChanged({
