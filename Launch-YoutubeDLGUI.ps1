@@ -1,3 +1,5 @@
+<# Adding header comments #>
+
 Function Update-CommandLine {
     if (($wpf.txtURL.text -eq "") -or -not ($wpf.txtURL.text -match "\b((http|https):\/\/?)[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|\/?))")) {
         $global:CommandLineValid = $false
