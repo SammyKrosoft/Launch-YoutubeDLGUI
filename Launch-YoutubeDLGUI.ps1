@@ -6,7 +6,8 @@ Function Update-CommandLine {
         $global:CommandLineValid = $true
         $DownloadDirectory = $wpf.txtDownloadFolder.Text
         If ($wpf.chkDownloadVideo.IsChecked){
-            $strCommand = ('youtube-dl.exe -i -f best ') + ('"') + ($wpf.txtURL.text) + ('"') + (' -o ') + ('"') + $DownloadDirectory + ('%(artist)s - %(title)s.%(ext)s')+('"')
+            #$strCommand = ('youtube-dl.exe -i -f best ') + ('"') + ($wpf.txtURL.text) + ('"') + (' -o ') + ('"') + $DownloadDirectory + ('%(artist)s - %(title)s.%(ext)s')+('"')
+            $strCommand = ('youtube-dl.exe -i -f best ') + ('"') + ($wpf.txtURL.text) + ('"') + (' -o ') + ('"') + $DownloadDirectory + ('%(title)s.%(ext)s')+('"')
         } Else {
             $strCommand = ('youtube-dl.exe -i -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 ') + ('"') + ($wpf.txtURL.text) + ('"') + (' -o ') + ('"') + $DownloadDirectory + ('%(artist)s - %(title)s.%(ext)s')+('"')
         }
