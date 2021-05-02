@@ -69,20 +69,24 @@ $inputXML = @"
         mc:Ignorable="d"
         Title="Youtube-DL PowerShell Front-End" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="txtURL" HorizontalAlignment="Left" Height="64" Margin="10,94,0,0" TextWrapping="Wrap" Text="&lt;paste your URL here&gt;" VerticalAlignment="Top" Width="744"/>
+        <TextBox x:Name="txtURL" HorizontalAlignment="Left" Height="64" Margin="10,94,0,0" TextWrapping="Wrap" Text="&lt;paste your URL here&gt;" VerticalAlignment="Top" Width="531"/>
         <Label Content="URL:" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnRun" Content="Download" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,216,0,0"/>
-        <TextBox x:Name="txtCmd" HorizontalAlignment="Left" Height="43" Margin="10,163,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="744" IsReadOnly="True" Background="Black" Foreground="Yellow"/>
-        <TextBox x:Name="txtExecLocation" HorizontalAlignment="Left" Height="49" Margin="326,291,0,0" TextWrapping="Wrap" Text="C:\Users\Sammy\OneDrive\Utils\Youtube-dl" VerticalAlignment="Top" Width="294"/>
-        <Label Content="Location of Youtube-dl.exe:" HorizontalAlignment="Left" Margin="326,260,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnCheckExec" Content="Check" HorizontalAlignment="Left" Margin="326,345,0,0" VerticalAlignment="Top" Width="75"/>
-        <Label x:Name="lblExecStatus" Content="Label" HorizontalAlignment="Left" Margin="326,370,0,0" VerticalAlignment="Top"/>
-        <Ellipse x:Name="graphReady" Fill="Green" HorizontalAlignment="Left" Height="100" Margin="87,265,0,0" Stroke="Black" VerticalAlignment="Top" Width="100" Visibility="Hidden"/>
-        <Ellipse x:Name="graphGrey" Fill="Gray" HorizontalAlignment="Left" Height="100" Margin="87,265,0,0" Stroke="Black" VerticalAlignment="Top" Width="100"/>
-        <Rectangle x:Name="graphBusy" Fill="Red" HorizontalAlignment="Left" Height="100" Margin="87,265,0,0" Stroke="Black" VerticalAlignment="Top" Width="100" Visibility="Hidden"/>
+        <Button x:Name="btnRun" Content="Download" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,273,0,0"/>
+        <TextBox x:Name="txtCmd" HorizontalAlignment="Left" Height="56" Margin="10,212,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="531" Background="Black" Foreground="Yellow"/>
+        <TextBox x:Name="txtExecLocation" HorizontalAlignment="Left" Height="49" Margin="226,301,0,0" TextWrapping="Wrap" Text="C:\Users\Sammy\OneDrive\Utils\Youtube-dl" VerticalAlignment="Top" Width="294"/>
+        <Label Content="Location of Youtube-dl.exe:" HorizontalAlignment="Left" Margin="226,270,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnCheckExec" Content="Check" HorizontalAlignment="Left" Margin="226,355,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label x:Name="lblExecStatus" Content="Label" HorizontalAlignment="Left" Margin="226,370,0,0" VerticalAlignment="Top"/>
+        <Ellipse x:Name="graphReady" Fill="Green" HorizontalAlignment="Left" Height="100" Margin="10,314,0,0" Stroke="Black" VerticalAlignment="Top" Width="100"/>
+        <Ellipse x:Name="graphGrey" Fill="Gray" HorizontalAlignment="Left" Height="100" Margin="10,314,0,0" Stroke="Black" VerticalAlignment="Top" Width="100"/>
+        <Rectangle x:Name="graphBusy" Fill="Red" HorizontalAlignment="Left" Height="100" Margin="10,314,0,0" Stroke="Black" VerticalAlignment="Top" Width="100"/>
         <TextBox x:Name="txtDownloadFolder" HorizontalAlignment="Left" Height="23" Margin="441,41,0,0" TextWrapping="Wrap" Text="C:\temp" VerticalAlignment="Top" Width="259" IsReadOnly="True"/>
         <Label Content="Current download location:" HorizontalAlignment="Left" Margin="441,10,0,0" VerticalAlignment="Top" Width="231"/>
         <CheckBox x:Name="chkDownloadVideo" Content="Download video instead of converting to MP3" HorizontalAlignment="Left" Margin="441,69,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnChkFormats" Content="Check formats" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Margin="10,163,0,0"/>
+        <TextBlock x:Name="txtFormatsResults" HorizontalAlignment="Left" Margin="546,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="294" Width="239" Background="DarkBlue" Foreground="Yellow"/>
+        <Label Content="Formats results" HorizontalAlignment="Left" Margin="546,90,0,0" VerticalAlignment="Top"/>
+        <Label Content="Youtube-dl command line" HorizontalAlignment="Left" Margin="10,188,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
