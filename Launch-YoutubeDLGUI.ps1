@@ -7,26 +7,38 @@ Function Update-CommandLine {
         $DownloadDirectory = $wpf.txtDownloadFolder.Text
         If ($wpf.chkDownloadVideo.IsChecked){
             #$strCommand = ('youtube-dl.exe -i -f best ') + ('"') + ($wpf.txtURL.text) + ('"') + (' -o ') + ('"') + $DownloadDirectory + ('%(artist)s - %(title)s.%(ext)s')+('"')
-            $strCommand = ('youtube-dl.exe -i -f best ') + ('"') + ($wpf.txtURL.text) + ('"') + (' -o ') + ('"') + $DownloadDirectory + ('%(title)s.%(ext)s')+('"')
+            $strCommand = ('youtube-dl.exe -i -f best ') + ('"') + ($wpf.txtURL.text) + ('"') + (' -o ') + ('"') + $DownloadDirectory + ('%(artist)s - %(title)s.%(ext)s')+('"')
+            $wpf.chkCustomVideoAudio.IsEnabled = $true
+            $wpf.txtVideo.IsEnabled = $true
+            $wpf.txtAudio.IsEnabled = $true
         } Else {
             $strCommand = ('youtube-dl.exe -i -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 ') + ('"') + ($wpf.txtURL.text) + ('"') + (' -o ') + ('"') + $DownloadDirectory + ('%(artist)s - %(title)s.%(ext)s')+('"')
+            $wpf.chkCustomVideoAudio.IsEnabled = $False
+            $wpf.txtVideo.IsEnabled = $false
+            $wpf.txtAudio.IsEnabled = $false
         }
     }
     $wpf.txtCmd.Text = $strCommand
 
     if (($global:CommandLineValid) -and ($global:ExecExist)){
         $wpf.btnRun.IsEnabled = $true
+        $wpf.btnChkFormats.IsEnabled = $true
         $wpf.graphBusy.Visibility = "Hidden"
         $wpf.graphReady.Visibility = "Visible"
         $wpf.graphGrey.Visibility = "Hidden"
     } Else {
         $wpf.btnRun.IsEnabled = $false
+        $wpf.btnChkFormats.IsEnabled = $false
         $wpf.graphBusy.Visibility = "Hidden"
         $wpf.graphReady.Visibility = "Hidden"
         $wpf.graphGrey.Visibility = "Visible"
     }
 }
 
+Function CmdYoutubeVideoFormatsList{
+    $strCommand = ($wpf.txtExecLocation.text) + ('\youtube-dl.exe -F ') + ('"') + ($wpf.txtURL.text) + ('"')
+    return $strCommand    
+ }
 
 Function Check-Exec {
     $FileExists = Test-Path $(($wpf.txtExecLocation.text) + ("\youtube-dl.exe"))
@@ -67,27 +79,29 @@ $inputXML = @"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Launch_Y_CMD"
         mc:Ignorable="d"
-        Title="Youtube-DL PowerShell Front-End" Height="450" Width="800">
-    <Grid>
-        <TextBox x:Name="txtURL" HorizontalAlignment="Left" Height="64" Margin="10,94,0,0" TextWrapping="Wrap" Text="&lt;paste your URL here&gt;" VerticalAlignment="Top" Width="531"/>
+        Title="Youtube-DL PowerShell Front-End" Height="511.335" Width="1238.109">
+    <Grid Background="Teal">
+        <TextBox x:Name="txtURL" HorizontalAlignment="Left" Height="64" Margin="10,94,0,0" TextWrapping="Wrap" Text="https://www.youtube.com/watch?v=Kbr8aLbycss" VerticalAlignment="Top" Width="590"/>
         <Label Content="URL:" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btnRun" Content="Download" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,273,0,0"/>
-        <TextBox x:Name="txtCmd" HorizontalAlignment="Left" Height="56" Margin="10,212,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="531" Background="Black" Foreground="Yellow"/>
-        <TextBox x:Name="txtExecLocation" HorizontalAlignment="Left" Height="49" Margin="226,301,0,0" TextWrapping="Wrap" Text="C:\Users\Sammy\OneDrive\Utils\Youtube-dl" VerticalAlignment="Top" Width="294"/>
-        <Label Content="Location of Youtube-dl.exe:" HorizontalAlignment="Left" Margin="226,270,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnCheckExec" Content="Check" HorizontalAlignment="Left" Margin="226,355,0,0" VerticalAlignment="Top" Width="75"/>
-        <Label x:Name="lblExecStatus" Content="Label" HorizontalAlignment="Left" Margin="226,370,0,0" VerticalAlignment="Top"/>
-        <Ellipse x:Name="graphReady" Fill="Green" HorizontalAlignment="Left" Height="100" Margin="10,314,0,0" Stroke="Black" VerticalAlignment="Top" Width="100"/>
-        <Ellipse x:Name="graphGrey" Fill="Gray" HorizontalAlignment="Left" Height="100" Margin="10,314,0,0" Stroke="Black" VerticalAlignment="Top" Width="100"/>
-        <Rectangle x:Name="graphBusy" Fill="Red" HorizontalAlignment="Left" Height="100" Margin="10,314,0,0" Stroke="Black" VerticalAlignment="Top" Width="100"/>
-        <TextBox x:Name="txtDownloadFolder" HorizontalAlignment="Left" Height="23" Margin="441,41,0,0" TextWrapping="Wrap" Text="C:\temp" VerticalAlignment="Top" Width="259" IsReadOnly="True"/>
-        <Label Content="Current download location:" HorizontalAlignment="Left" Margin="441,10,0,0" VerticalAlignment="Top" Width="231"/>
-        <CheckBox x:Name="chkDownloadVideo" Content="Download video instead of converting to MP3" HorizontalAlignment="Left" Margin="441,69,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtCmd" HorizontalAlignment="Left" Height="56" Margin="10,212,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="590" Background="Black" Foreground="Yellow"/>
+        <TextBox x:Name="txtExecLocation" HorizontalAlignment="Left" Height="49" Margin="306,299,0,0" TextWrapping="Wrap" Text="C:\Users\Sammy\OneDrive\Utils\Youtube-dl" VerticalAlignment="Top" Width="294"/>
+        <Label Content="Location of Youtube-dl.exe:" HorizontalAlignment="Left" Margin="306,273,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnCheckExec" Content="Check" HorizontalAlignment="Left" Margin="306,360,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label x:Name="lblExecStatus" Content="Label" HorizontalAlignment="Left" Margin="306,385,0,0" VerticalAlignment="Top"/>
+        <Ellipse x:Name="graphReady" Fill="Green" HorizontalAlignment="Left" Height="100" Margin="438,361,0,0" Stroke="Black" VerticalAlignment="Top" Width="100"/>
+        <Ellipse x:Name="graphGrey" Fill="Gray" HorizontalAlignment="Left" Height="100" Margin="438,360,0,0" Stroke="Black" VerticalAlignment="Top" Width="100"/>
+        <Rectangle x:Name="graphBusy" Fill="Red" HorizontalAlignment="Left" Height="100" Margin="438,360,0,0" Stroke="Black" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="txtDownloadFolder" HorizontalAlignment="Left" Height="23" Margin="10,35,0,0" TextWrapping="Wrap" Text="C:\temp" VerticalAlignment="Top" Width="259" IsReadOnly="True"/>
+        <Label Content="Current download location:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="231"/>
+        <CheckBox x:Name="chkDownloadVideo" Content="Download video instead of converting to MP3" HorizontalAlignment="Left" Margin="10,301,0,0" VerticalAlignment="Top" Height="18" Width="276"/>
         <Button x:Name="btnChkFormats" Content="Check formats" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Margin="10,163,0,0"/>
-        <TextBlock x:Name="txtFormatsResults" HorizontalAlignment="Left" Margin="546,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="294" Width="239" Background="DarkBlue" Foreground="Yellow"/>
-        <Label Content="Formats results" HorizontalAlignment="Left" Margin="546,90,0,0" VerticalAlignment="Top"/>
+        <Label Content="Formats results" HorizontalAlignment="Left" Margin="619,17,0,0" VerticalAlignment="Top"/>
         <Label Content="Youtube-dl command line" HorizontalAlignment="Left" Margin="10,188,0,0" VerticalAlignment="Top"/>
-
+        <TextBox x:Name="txtboxFormatsResults" HorizontalAlignment="Left" Height="407" Margin="619,48,0,0" Text="caca" VerticalAlignment="Top" Width="584" Background="DarkBlue" Foreground="Yellow" FontFamily="Courier New" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"/>
+        <TextBox x:Name="txtVideo" HorizontalAlignment="Left" Height="22" Margin="10,347,0,0" Text="Paste Video stream" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.517,0" Background="Pink" MaxLines="1"/>
+        <TextBox x:Name="txtAudio" HorizontalAlignment="Left" Height="22" Margin="10,374,0,0" Text="Paste Audio stream" VerticalAlignment="Top" Width="120" Background="Purple" MaxLines="1"/>
+        <CheckBox x:Name="chkCustomVideoAudio" Content="Custom Video and Audio formats" HorizontalAlignment="Left" Margin="10,324,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
 "@
@@ -162,9 +176,30 @@ $wpf.chkDownloadVideo.add_Click({
     Update-CommandLine
 })
 
+$wpf.btnChkFormats.add_Click({
+    $wpf.graphBusy.Visibility = "Visible"
+    $wpf.graphReady.Visibility = "Hidden"
+    $wpf.graphGrey.Visibility = "Hidden"
+    $wpf.$FormName.IsEnabled = $false
+    $wpf.$FormName.Dispatcher.Invoke("Render",[action][scriptblock]{})
+
+    $command = CmdYoutubeVideoFormatsList
+    write-host $command
+    $Results = invoke-expression $command | Out-String
+    $Results | Out-Host
+    $wpf.txtboxFormatsResults.Text = $Results
+    $wpf.txtFormatsResults.Text = $Results
+
+    $wpf.$FormName.IsEnabled = $true
+    $wpf.graphBusy.Visibility = "Hidden"
+    $wpf.graphReady.Visibility = "Visible"
+    $wpf.graphGrey.Visibility = "Hidden"
+    $wpf.$FormName.Dispatcher.Invoke("Render",[action][scriptblock]{})
+})
+
 #HINT: to update progress bar and/or label during WPF Form treatment, add the following:
 # ... to re-draw the form and then show updated controls in realtime ...
-$wpf.$FormName.Dispatcher.Invoke("Render",[action][scriptblock]{})
+#$wpf.$FormName.Dispatcher.Invoke("Render",[action][scriptblock]{})
 
 
 # Load the form:
