@@ -85,7 +85,7 @@ $inputXML = @"
         <Label Content="URL:" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btnRun" Content="Download" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,273,0,0"/>
         <TextBox x:Name="txtCmd" HorizontalAlignment="Left" Height="56" Margin="10,212,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="590" Background="Black" Foreground="Yellow"/>
-        <TextBox x:Name="txtExecLocation" HorizontalAlignment="Left" Height="49" Margin="306,299,0,0" TextWrapping="Wrap" Text="C:\Users\Sammy\OneDrive\Utils\Youtube-dl" VerticalAlignment="Top" Width="294"/>
+        <TextBox x:Name="txtExecLocation" HorizontalAlignment="Left" Height="49" Margin="306,299,0,0" TextWrapping="Wrap" Text="C:\Users\Administrator\OneDrive\Utils\Youtube-dl" VerticalAlignment="Top" Width="294"/>
         <Label Content="Location of Youtube-dl.exe:" HorizontalAlignment="Left" Margin="306,273,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btnCheckExec" Content="Check" HorizontalAlignment="Left" Margin="306,360,0,0" VerticalAlignment="Top" Width="75"/>
         <Label x:Name="lblExecStatus" Content="Label" HorizontalAlignment="Left" Margin="306,385,0,0" VerticalAlignment="Top"/>
@@ -98,7 +98,7 @@ $inputXML = @"
         <Button x:Name="btnChkFormats" Content="Check formats" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Margin="10,163,0,0"/>
         <Label Content="Formats results" HorizontalAlignment="Left" Margin="619,17,0,0" VerticalAlignment="Top"/>
         <Label Content="Youtube-dl command line" HorizontalAlignment="Left" Margin="10,188,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtboxFormatsResults" HorizontalAlignment="Left" Height="407" Margin="619,48,0,0" Text="caca" VerticalAlignment="Top" Width="584" Background="DarkBlue" Foreground="Yellow" FontFamily="Courier New" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"/>
+        <TextBox x:Name="txtboxFormatsResults" HorizontalAlignment="Left" Height="407" Margin="619,48,0,0" Text="Formats results will be displayed here" VerticalAlignment="Top" Width="584" Background="DarkBlue" Foreground="Yellow" FontFamily="Courier New" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"/>
         <TextBox x:Name="txtVideo" HorizontalAlignment="Left" Height="22" Margin="10,347,0,0" Text="Paste Video stream" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.517,0" Background="Pink" MaxLines="1"/>
         <TextBox x:Name="txtAudio" HorizontalAlignment="Left" Height="22" Margin="10,374,0,0" Text="Paste Audio stream" VerticalAlignment="Top" Width="120" Background="Purple" MaxLines="1"/>
         <CheckBox x:Name="chkCustomVideoAudio" Content="Custom Video and Audio formats" HorizontalAlignment="Left" Margin="10,324,0,0" VerticalAlignment="Top"/>
@@ -148,6 +148,7 @@ $wpf.btnRun.add_click({
         Update-CommandLine #normally not necessary here because each time you change the txtURL, the cmdline is updated anyways through the txtURL.add_Changed event handler ... but well just in case !
         #[string]$CommandWithFullPath = ("cmd.exe /C ") + ('"') + ($wpf.txtExecLocation.text) + ('\') + ($wpf.txtCmd.Text) + ('"')
         [string]$CommandWithFullPath = ($wpf.txtExecLocation.text) + ('\') + ($wpf.txtCmd.Text)
+        Write-Host $CommandWithFullPath
         $wpf.graphBusy.Visibility = "Visible"
         $wpf.graphReady.Visibility = "Hidden"
         $wpf.graphGrey.Visibility = "Hidden"
@@ -188,7 +189,6 @@ $wpf.btnChkFormats.add_Click({
     $Results = invoke-expression $command | Out-String
     $Results | Out-Host
     $wpf.txtboxFormatsResults.Text = $Results
-    $wpf.txtFormatsResults.Text = $Results
 
     $wpf.$FormName.IsEnabled = $true
     $wpf.graphBusy.Visibility = "Hidden"
