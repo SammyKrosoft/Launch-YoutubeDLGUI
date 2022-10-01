@@ -124,8 +124,8 @@ $wpf.$FormName.Add_Loaded({
     #Update-Cmd
     $DownloadDirectory = "$($env:userprofile)\Downloads\"
     $wpf.txtDownloadFolder.Text = $DownloadDirectory
-    $ExecLocation = "$($env:userprofile)\Onedrive\Utils\Youtube-dl"
-    $wpf.txtExecLocation.Text = $ExecLocation
+    # $ExecLocation = "$($env:userprofile)\Onedrive\Utils\Youtube-dl"
+    # $wpf.txtExecLocation.Text = $ExecLocation
 })
 #Things to load when the WPF form is rendered aka drawn on screen
 $wpf.$FormName.Add_ContentRendered({
