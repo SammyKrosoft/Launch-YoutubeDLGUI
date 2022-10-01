@@ -85,7 +85,7 @@ $inputXML = @"
         <Label Content="URL:" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btnRun" Content="Download" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,273,0,0"/>
         <TextBox x:Name="txtCmd" HorizontalAlignment="Left" Height="56" Margin="10,212,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="590" Background="Black" Foreground="Yellow"/>
-        <TextBox x:Name="txtExecLocation" HorizontalAlignment="Left" Height="49" Margin="306,299,0,0" TextWrapping="Wrap" Text="C:\Users\sammy\OneDrive\Utils\Youtube-dl" VerticalAlignment="Top" Width="294"/>
+        <TextBox x:Name="txtExecLocation" HorizontalAlignment="Left" Height="49" Margin="306,299,0,0" TextWrapping="Wrap" Text="C:\Users\<UserProfile>\OneDrive\Utils\Youtube-dl" VerticalAlignment="Top" Width="294"/>
         <Label Content="Location of Youtube-dl.exe:" HorizontalAlignment="Left" Margin="306,273,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btnCheckExec" Content="Check" HorizontalAlignment="Left" Margin="306,360,0,0" VerticalAlignment="Top" Width="75"/>
         <Label x:Name="lblExecStatus" Content="Label" HorizontalAlignment="Left" Margin="306,385,0,0" VerticalAlignment="Top"/>
@@ -124,6 +124,8 @@ $wpf.$FormName.Add_Loaded({
     #Update-Cmd
     $DownloadDirectory = "$($env:userprofile)\Downloads\"
     $wpf.txtDownloadFolder.Text = $DownloadDirectory
+    $ExecLocation = "$($env:userprofile)\Onedrive\Utils\Youtube-dl"
+    $wpf.txtExecLocation.Text = $ExecLocation
 })
 #Things to load when the WPF form is rendered aka drawn on screen
 $wpf.$FormName.Add_ContentRendered({
